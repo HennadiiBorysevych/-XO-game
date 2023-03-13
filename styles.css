@@ -61,3 +61,27 @@ span {
   bottom: 50px;
   top: 0;
 }
+button {
+  background: dimgray;
+  border-radius: 2px;
+  color: ghostwhite;
+  border: none;
+  outline: none;
+}
+button:focus {
+  background: silver;
+}
+.activeBox {
+  background: silver;
+}
+
+@keyframes larger {
+  from {
+    height: 75px;
+    width: 125px;
+  }
+  to {
+    height: 100px;
+    width: 250px;
+  }
+}
