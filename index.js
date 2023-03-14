@@ -1,11 +1,11 @@
 let playerTurn = "x";
 let moves = 0;
 let isGameOver = false;
-const span = document.getElementsByTagName("span");
+const span = document.querySelectorAll("span");
 let restartButton = `<button onclick="resetGame()">Restart Game</button>`;
 
 function play(box) {
-  if (box.dataset.player == "none" && isGameOver === false) {
+  if (box.dataset.player == "none" && !isGameOver) {
     box.innerHTML = playerTurn;
     box.dataset.player = playerTurn;
     moves++;
@@ -21,7 +21,7 @@ function play(box) {
   checkWinner(1, 5, 9);
   checkWinner(3, 5, 7);
 
-  if (moves == 9 && isGameOver === false) {
+  if (moves == 9 && !isGameOver) {
     draw();
   }
 }
@@ -30,7 +30,7 @@ function checkWinner(a, b, c) {
   b--;
   c--;
   if (
-    isGameOver == false &&
+    !isGameOver &&
     span[a].dataset.player === span[b].dataset.player &&
     span[b].dataset.player === span[c].dataset.player &&
     span[a].dataset.player === span[c].dataset.player &&
@@ -43,13 +43,12 @@ function checkWinner(a, b, c) {
   }
 }
 function playAgain() {
-  document
-    .getElementsByClassName("alert")[0]
-    .parentNode.removeChild(document.getElementsByClassName("alert")[0]);
+  const alertBox = document.querySelector(".alert");
+  alertBox.parentNode.removeChild(alertBox);
   resetGame();
   isGameOver = false;
   for (let i = 0; i < span.length; i++) {
-    span[i].parentNode.className = span[i].parentNode.cloneName.replace(
+    span[i].parentNode.className = span[i].parentNode.className.replace(
       "activeBox",
       ""
     );
@@ -57,11 +56,6 @@ function playAgain() {
 }
 
 function resetGame() {
-  for (let i = 0; i < span.length; i++) {
-    span[i].dataset.player = "none";
-    span[i].innerHTML = "&nbsp;";
-  }
-  playerTurn = "x";
   location.reload();
 }
 function gameOver(a) {
@@ -71,9 +65,11 @@ function gameOver(a) {
     " Win! <br><br>" +
     restartButton;
   let div = document.createElement("div");
-  div.className = "alert";
+  div.classList.add("alert");
+
   div.innerHTML = gameOverAlert;
-  document.getElementsByTagName("body")[0].appendChild(div);
+  document.body.appendChild(div);
+
   isGameOver = true;
   moves = 0;
 }
@@ -81,9 +77,9 @@ function gameOver(a) {
 function draw() {
   let drawAlert = "<b>Draw!</b><br><br>" + restartButton;
   let div = document.createElement("div");
-  div.className = "alert";
+  div.classList.add("alert");
   div.innerHTML = drawAlert;
-  document.getElementsByTagName("body")[0].appendChild(div);
+  document.body.appendChild(div);
   isGameOver = true;
   moves = 0;
 }
